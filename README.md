@@ -1,4 +1,115 @@
-# 🎧 MusicStream: Uma Réplica Baseada no Spotify \ ***7º Termo - LP 2***
+## 🌐 Language | Idioma
+
+[🇺🇸 English (Default)](#en) | [🇧🇷 Português](#pt)
+
+<div id="en"></div>
+
+---
+
+# MusicStream: A Spotify-Based Replica \ ***7th Term - LP 2***
+
+This project is a full-stack web application developed as a simplified replica of Spotify, focused on managing users, songs, and playlists. It is built with a Node.js (Express) backend, a Vue.js frontend, and uses MongoDB as the database, all orchestrated via Docker Compose for a consistent development environment.
+
+## Overview
+
+The application allows users to log in, manage their profiles, upload and organize their songs, and create playlists. The user interface is inspired by Spotify's design, offering an intuitive experience for navigation and interaction with musical content.
+
+## Main Features
+
+### **User Management:**
+*   **Creation, Reading, Updating, and Deletion (CRUD):** Total control over user profiles.
+*   **Authentication:** Secure login system with password hashing (`bcrypt`) and JSON Web Tokens (JWT) for authenticated sessions.
+*   **Address Auto-fill:** Integration with the ViaCEP API for automatic filling of street, neighborhood, and state based on the Zip Code (CEP).
+
+### **Song Management:**
+*   **CRUD:** Ability to add, view, edit, and remove songs.
+*   **Media Upload:** Support for uploading audio files and thumbnails associated with songs.
+*   **Organization by Author:** Songs are associated with an `autorId`, allowing the listing of songs by user.
+
+### **Playlist Management:**
+*   **CRUD:** Creation, viewing, editing, and deletion of playlists.
+*   **Adding Songs:** Playlists can include multiple songs (by their IDs).
+*   **Permissions:** Playlists can be defined as "Public" or "Private".
+*   **Thumbnail Upload:** Support for uploading cover images for playlists.
+
+  ---
+
+## Technologies Used
+
+### **Backend (Node.js/Express):**
+
+*   **Docker:** To package and isolate backend, frontend, and database environments.
+*   **Docker Compose:** To define and run multi-container Docker applications with a single command line.
+*   **Node.js:** JavaScript runtime environment.
+*   **Express.js:** Web framework to build the RESTful API.
+*   **MongoDB & Mongoose:** NoSQL database and ODM (Object Data Modeling) for interaction with MongoDB.
+*   **Bcrypt:** Library for password hashing.
+*   **JSON Web Tokens (JWT):** For user authentication and authorization.
+*   **Multer:** Middleware for handling file uploads (audio and images).
+*   **Helmet:** Helps secure the Express application against security vulnerabilities.
+*   **Express-Rate-Limit:** Middleware to limit repeated requests to the same API, to prevent brute-force attacks.
+*   **CORS:** Middleware to enable Cross-Origin Resource Sharing.
+*   **Compression:** For HTTP response data compression.
+*   **Morgan:** HTTP request logger.
+*   **Dotenv:** To load environment variables.
+
+### **Frontend (Vue.js):**
+*   **Vue.js 3:** Progressive JavaScript framework for building the user interface.
+*   **Vue Router:** Route management and SPA (Single Page Application) navigation.
+*   **Tailwind CSS:** Utility-first CSS framework for fast and responsive styles.
+*   **Axios:** HTTP client to make requests to the backend API.
+
+## Project Entities
+
+The project is built around the following main entities:
+
+*   **USER:**
+    *   Represents the platform user. Can be a normal user or an **Author** (one who uploads songs).
+    *   Stores information such as `name`, `email`, `password` (hashed), and `address` data (street, neighborhood, state, CEP).
+*   **SONG (AUDIO):**
+    *   Represents an audio track available on the platform.
+    *   Has `name`, `artist`, `genre`, `filePath` (path to the audio file), `thumbnailPath` (path to the thumbnail), and `autorId` (linked to USER).
+*   **PLAYLIST:**
+    *   Collection of songs.
+    *   Has `name`, `description`, `donoId` (linked to the USER who created the playlist), an array of `musicasIds` (linked to SONGS), `permission` (public/private), and `thumbnailPath`.
+
+---
+
+## API Endpoints
+
+A Postman collection has been provided to facilitate testing the backend endpoints. Import the file `Rotas-Postman/Spotify - Collection.postman_collection.json` into your Postman.
+
+The endpoints include CRUD operations for:
+
+*   **Users:**
+    *   `POST /create-user`
+    *   `GET /get-users`
+    *   `GET /get-user/:id`
+    *   `PUT /edit-user/:id`
+    *   `DELETE /delete-user/:id`
+*   **Songs:**
+    *   `POST /create-music` (supports `form-data` for files)
+    *   `GET /get-musics`
+    *   `GET /get-music/:id`
+    *   `GET /get-musics-by-user/:autorId`
+    *   `PUT /edit-music/:id` (supports `form-data` for files)
+    *   `DELETE /delete-music/:id`
+*   **Playlists:**
+    *   `POST /create-playlist` (supports `form-data` for thumbnail and `musicasIdsArray` as JSON string)
+    *   `GET /get-playlists`
+    *   `GET /get-playlist/:id`
+    *   `GET /get-playlists-by-user/:donoId`
+    *   `PUT /edit-playlist/:id` (supports `form-data` for thumbnail)
+    *   `DELETE /delete-playlist/:id`
+*   **Authentication:**
+    *   `POST /login` (to authenticate users)
+    *   `POST /logout` (to end sessions)
+
+<div id="pt"></div>
+
+---
+
+# MusicStream: Uma Réplica Baseada no Spotify \ ***7º Termo - LP 2***
 
 Este projeto é uma aplicação web full-stack desenvolvida como uma réplica simplificada do Spotify, focada no gerenciamento de usuários, músicas e playlists. Ele é construído com um backend em Node.js (Express), um frontend em Vue.js e utiliza MongoDB como banco de dados, tudo orquestrado via Docker Compose para um ambiente de desenvolvimento consistente.
 
@@ -68,7 +179,7 @@ O projeto é construído em torno das seguintes entidades principais:
 
 ---
 
-## 🗺️ Endpoints da API
+## Endpoints da API
 
 Uma coleção do Postman foi fornecida para facilitar o teste dos endpoints do backend. Importe o arquivo `Rotas-Postman/Spotify - Collection.postman_collection.json` para o seu Postman.
 
