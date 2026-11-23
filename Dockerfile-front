@@ -6,7 +6,7 @@ WORKDIR /app
 COPY frontend/package*.json ./
 
 # Instalar dependências
-RUN npm install
+RUN npm ci
 COPY frontend/ .
 
 EXPOSE 3000
