@@ -72,9 +72,9 @@ cp frontend/.env.example frontend/.env
 *   `MONGO_INITDB_ROOT_PASSWORD` is only applied when the MongoDB data volume is first created. To change it later, update the password inside MongoDB or recreate the volume.
 *   With Docker Compose, use `database` as the MongoDB host in `MONGODB_URI`, since that is the service name on the compose network.
 
-## Known Dev Dependency Advisories
+## Dev Toolchain Overrides
 
-`npm audit` still reports advisories in the frontend's Vue CLI 5 development toolchain (`@vue/cli-service`, `webpack-dev-server`, `@vue/cli-plugin-eslint`, and related packages). The only automatic fixes are major upgrades (webpack-dev-server 5, or a downgrade of `@vue/cli-plugin-eslint`), which require changes to the build setup, so they were deferred. The frontend Docker service runs this dev server, so run it only on trusted networks.
+The frontend keeps Vue CLI 5, but `frontend/package.json` uses `overrides` to pin some of its transitive dev-server packages to patched versions, which clears the `npm audit` advisories: `webpack-dev-server` 6, `webpack-dev-middleware` 8, `serialize-javascript`, `uuid`, `cross-spawn`, and `postcss` 8.5.23 under `@vue/component-compiler-utils`. These versions are outside the ranges Vue CLI 5 declares, so revisit them whenever Vue CLI or the build tooling is upgraded. The dev server requires Node.js 22.15 or newer, which is why the frontend Docker image uses `node:22-alpine`. The frontend Docker service runs this dev server, so run it only on trusted networks.
 
 ## Project Entities
 
@@ -193,9 +193,9 @@ cp frontend/.env.example frontend/.env
 *   `MONGO_INITDB_ROOT_PASSWORD` só é aplicada quando o volume de dados do MongoDB é criado pela primeira vez. Para alterá-la depois, troque a senha dentro do MongoDB ou recrie o volume.
 *   Com o Docker Compose, use `database` como host do MongoDB em `MONGODB_URI`, pois é o nome do serviço na rede do compose.
 
-## Avisos Conhecidos de Dependências de Desenvolvimento
+## Overrides da Toolchain de Desenvolvimento
 
-O `npm audit` ainda aponta avisos na cadeia de desenvolvimento do Vue CLI 5 do frontend (`@vue/cli-service`, `webpack-dev-server`, `@vue/cli-plugin-eslint` e pacotes relacionados). As únicas correções automáticas são upgrades major (webpack-dev-server 5, ou downgrade do `@vue/cli-plugin-eslint`), que exigem mudanças na configuração de build; por isso foram adiadas. O serviço `application` do Docker roda esse servidor de desenvolvimento, então execute-o apenas em redes confiáveis.
+O frontend continua com o Vue CLI 5, mas o `frontend/package.json` usa `overrides` para fixar algumas dependências transitivas do servidor de desenvolvimento em versões corrigidas, o que zera os avisos do `npm audit`: `webpack-dev-server` 6, `webpack-dev-middleware` 8, `serialize-javascript`, `uuid`, `cross-spawn` e `postcss` 8.5.23 em `@vue/component-compiler-utils`. Essas versões estão fora das faixas que o Vue CLI 5 declara, então revise-as sempre que o Vue CLI ou a ferramenta de build for atualizada. O servidor de desenvolvimento exige Node.js 22.15 ou superior, por isso a imagem Docker do frontend usa `node:22-alpine`. O serviço do frontend no Docker roda esse servidor de desenvolvimento, então execute-o apenas em redes confiáveis.
 
 ## Entidades do Projeto
 
