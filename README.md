@@ -59,6 +59,23 @@ The application allows users to log in, manage their profiles, upload and organi
 *   **Tailwind CSS:** Utility-first CSS framework for fast and responsive styles.
 *   **Axios:** HTTP client to make requests to the backend API.
 
+## Environment Setup
+
+Secrets are not tracked in git. Create your local files from the templates and fill in the values:
+
+```bash
+cp .env.example .env
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+```
+
+*   `MONGO_INITDB_ROOT_PASSWORD` is only applied when the MongoDB data volume is first created. To change it later, update the password inside MongoDB or recreate the volume.
+*   With Docker Compose, use `database` as the MongoDB host in `MONGODB_URI`, since that is the service name on the compose network.
+
+## Known Dev Dependency Advisories
+
+`npm audit` still reports advisories in the frontend's Vue CLI 5 development toolchain (`@vue/cli-service`, `webpack-dev-server`, `@vue/cli-plugin-eslint`, and related packages). The only automatic fixes are major upgrades (webpack-dev-server 5, or a downgrade of `@vue/cli-plugin-eslint`), which require changes to the build setup, so they were deferred. The frontend Docker service runs this dev server, so run it only on trusted networks.
+
 ## Project Entities
 
 The project is built around the following main entities:
@@ -162,6 +179,23 @@ A aplicação permite que usuários façam login, gerenciem seus perfis, carregu
 *   **Vue Router:** Gerenciamento de rotas e navegação da SPA (Single Page Application).
 *   **Tailwind CSS:** Framework CSS utility-first para estilos rápidos e responsivos.
 *   **Axios:** Cliente HTTP para fazer requisições à API do backend.
+
+## Configuração do Ambiente
+
+Os segredos não são versionados no git. Crie seus arquivos locais a partir dos modelos e preencha os valores:
+
+```bash
+cp .env.example .env
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+```
+
+*   `MONGO_INITDB_ROOT_PASSWORD` só é aplicada quando o volume de dados do MongoDB é criado pela primeira vez. Para alterá-la depois, troque a senha dentro do MongoDB ou recrie o volume.
+*   Com o Docker Compose, use `database` como host do MongoDB em `MONGODB_URI`, pois é o nome do serviço na rede do compose.
+
+## Avisos Conhecidos de Dependências de Desenvolvimento
+
+O `npm audit` ainda aponta avisos na cadeia de desenvolvimento do Vue CLI 5 do frontend (`@vue/cli-service`, `webpack-dev-server`, `@vue/cli-plugin-eslint` e pacotes relacionados). As únicas correções automáticas são upgrades major (webpack-dev-server 5, ou downgrade do `@vue/cli-plugin-eslint`), que exigem mudanças na configuração de build; por isso foram adiadas. O serviço `application` do Docker roda esse servidor de desenvolvimento, então execute-o apenas em redes confiáveis.
 
 ## Entidades do Projeto
 
